@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор струмів КЗ та перевірки кабелів</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Веб калькулятор для розрахунку струмів КЗ</h1>
+        
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('cable-selection')">Вибір кабелів</button>
+            <button class="tab-button" onclick="openTab('short-circuit')">Струми КЗ на ГПП</button>
+            <button class="tab-button" onclick="openTab('hpsem')">Розрахунок для ХПнЕМ</button>
+        </div>
+        
+        <!-- Вибір кабелів -->
+        <div id="cable-selection" class="tab-content active">
+            <h2>Вибір кабелів для живлення підстанції 10 кВ</h2>
+            <div class="input-group">
+                <label for="power">Потужність навантаження, кВА:</label>
+                <input type="number" id="power" step="0.1" min="0">
+            </div>
+            <div class="input-group">
+                <label for="voltage">Номінальна напруга, кВ:</label>
+                <select id="voltage">
+                    <option value="10">10 кВ</option>
+                    <option value="6">6 кВ</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="hours">Час використання максимуму навантаження, год/рік:</label>
+                <input type="number" id="hours" min="0">
+            </div>
+            <div class="input-group">
+                <label for="cable-type">Тип кабелю:</label>
+                <select id="cable-type">
+                    <option value="paper">З паперовою ізоляцією</option>
+                    <option value="plastic">З пластмасовою ізоляцією</option>
+                    <option value="rubber">З гумовою ізоляцією</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="conductor">Матеріал жили:</label>
+                <select id="conductor">
+                    <option value="aluminum">Алюміній</option>
+                    <option value="copper">Мідь</option>
+                </select>
+            </div>
+            <button onclick="calculateCable()">Розрахувати</button>
+            <div id="cable-result" class="result"></div>
+        </div>
+        
+        <!-- Розрахунок струмів КЗ на ГПП -->
+        <div id="short-circuit" class="tab-content">
+            <h2>Розрахунок струмів КЗ на шинах 10 кВ ГПП</h2>
+            <div class="input-group">
+                <label for="short-circuit-power">Потужність КЗ на стороні ВН, МВА:</label>
+                <input type="number" id="short-circuit-power" step="0.1" min="0" value="200">
+            </div>
+            <div class="input-group">
+                <label for="transformer-power">Потужність трансформатора, кВА:</label>
+                <input type="number" id="transformer-power" step="0.1" min="0" value="6300">
+            </div>
+            <div class="input-group">
+                <label for="uk-percent">Напруга КЗ трансформатора, %:</label>
+                <input type="number" id="uk-percent" step="0.1" min="0" value="10.5">
+            </div>
+            <div class="input-group">
+                <label for="voltage-high">Номінальна напруга ВН, кВ:</label>
+                <input type="number" id="voltage-high" step="0.1" min="0" value="10.5">
+            </div>
+            <button onclick="calculateShortCircuit()">Розрахувати</button>
+            <div id="short-circuit-result" class="result"></div>
+        </div>
+        
+        <!-- Розрахунок для ХПнЕМ -->
+        <div id="hpsem" class="tab-content">
+            <h2>Розрахунок струмів КЗ для підстанції ХПнЕМ</h2>
+            <div class="input-group">
+                <label for="regime">Режим роботи:</label>
+                <select id="regime">
+                    <option value="normal">Нормальний</option>
+                    <option value="minimal">Мінімальний</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="transformer-power-hpsem">Потужність трансформатора, кВА:</label>
+                <input type="number" id="transformer-power-hpsem" step="0.1" min="0" value="6300">
+            </div>
+            <div class="input-group">
+                <label for="uk-percent-hpsem">Напруга КЗ трансформатора, %:</label>
+                <input type="number" id="uk-percent-hpsem" step="0.1" min="0" value="11.1">
+            </div>
+            <div class="input-group">
+                <label for="voltage-high-hpsem">Номінальна напруга ВН, кВ:</label>
+                <input type="number" id="voltage-high-hpsem" step="0.1" min="0" value="115">
+            </div>
+            <button onclick="calculateHPSEM()">Розрахувати</button>
+            <div id="hpsem-result" class="result"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
